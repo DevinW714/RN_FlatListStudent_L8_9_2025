@@ -1,26 +1,17 @@
-import colors from "@/styles/colors";
+import ListItem from "@/components/ListItem";
+import ListItemSeparator from "@/components/ListItemSeperator";
+import { DATA, dataType } from "@/data/appData";
 import defaultStyles from "@/styles/defaultStyles";
 import { useState } from "react";
 import {
   FlatList,
   StyleSheet,
   Text,
-  TouchableHighlight,
-  View,
+  View
 } from "react-native";
 
 export default function Index() {
-  type dataType = {
-    id: string; // unique identifier in list
-    title: string; // text I want to show in list
-  }
-
-  const DATA: dataType[] = [
-    {id: "1", title: "First Item"},
-    {id: "2", title: "Second Item"},
-    {id: "3", title: "Third Item"},
-    {id: "4", title: "Fourth Item"},
-  ]
+  
   const[selectedId, setSelectedId] = useState<string>("1");
 
       // call this when they click on an item
@@ -39,12 +30,14 @@ export default function Index() {
           <FlatList
             data={DATA}
             keyExtractor={(item: dataType) => item.id}
+            extraData={selectedId}
+            ItemSeparatorComponent={() => (<ListItemSeparator color='black' />)}
             renderItem={({ item }) => (
-              <TouchableHighlight onPress={() => selectedList(item)}>
-                <View style={[styles.flatListRow, {backgroundColor: item.id === selectedId ? colors.primary : colors.secondary}]}>
-                  <Text style={[styles.titleText, {backgroundColor: item.id === selectedId ? colors.text.light : colors.text.dark}]}>{item.title}</Text>
-                </View>
-              </TouchableHighlight>
+              <ListItem 
+                item = {item}
+                isSelected = {item.id === selectedId}
+                onPress={selectedList}
+              />
             )
           }
           />
@@ -59,8 +52,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   flatListRow: {
-    backgroundColor: 'lightblue',
-    width: 200,
+    backgroundColor: 'lightyellow',
+    width: 300,
     margin: 12,
     padding: 10,
   },

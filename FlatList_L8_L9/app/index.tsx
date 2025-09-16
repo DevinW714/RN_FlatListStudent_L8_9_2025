@@ -27,7 +27,7 @@ export default function Index() {
       </View>
       <View style={[defaultStyles.textContainer, { flex: 1 }]}>
         <View style={styles.flatlist}>
-          <FlatList
+          <FlatList 
             data={DATA}
             keyExtractor={(item: dataType) => item.id}
             extraData={selectedId}
